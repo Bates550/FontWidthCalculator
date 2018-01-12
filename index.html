@@ -1,0 +1,124 @@
+<!doctype html>
+
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+
+  <title>Font Width Calculator</title>
+
+  <!--[if lt IE 9]>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html5shiv/3.7.3/html5shiv.js"></script>
+  <![endif]-->
+
+  <style type="text/css">
+    @font-face {
+      font-family: "mono";
+      src: url('./NotoMono-Regular.ttf') format("truetype");
+    }
+    @font-face {
+      font-family: "sans";
+      src: url('./NotoSans-Regular.ttf') format("truetype");
+    }
+    .mono {
+      font-family: "mono";
+    }
+    .sans {
+      font-family: "sans";
+    }
+
+    body {
+      font-size: 14px;
+    }
+
+    span {
+      margin: 0;
+      padding: 0;
+      border: none;
+    }
+  </style>
+</head>
+
+<body>
+  I want the widths of all glyphs in Noto Sans with 
+  <label>
+    font size of
+    <input id="fontSizeValue" type="number" value="14">
+  </label>
+  <select id="fontSizeUnit">
+    <option value="ch">ch</option>
+    <option value="cm">cm</option>
+    <option value="ex">ex</option>
+    <option value="in">in</option>
+    <option value="mm">mm</option>
+    <option value="pc">pc</option>
+    <option value="pt">pt</option>
+    <option value="px" selected>px</option>
+    <option value="vh">vh</option>
+    <option value="vw">vw</option>
+  </select>
+  with char codes  
+  <label>
+    from
+    <input id="from" type="number" placeholder="inclusive">
+  </label>
+  <label>
+    to
+    <input id="to" type="number" placeholder="exclusive">
+  </label>
+  <button id="calculate">Calculate</button>
+  <span id="container" class="sans">
+  </span>
+  <script>
+    (function iife() {
+      const range = (start, end) => {
+        if (start > end) {
+          throw new Error(`start ${start} cannot be greater than end ${end}.`);
+        }
+        const unfilled = Array(end - start).fill(0);
+        return unfilled.map((_, i) => start + i);
+      };
+
+      const calculate = (start, end) => {
+        const chars = range(start, end).map((charCode) => {
+          return String.fromCharCode(charCode);
+        });
+
+        const charNodes = chars.map((char) => {
+          const el = document.createElement('span');
+          el.textContent = char;
+          return el;
+        });
+
+        const container = document.getElementById('container');
+        charNodes.forEach(charNode => {
+          container.appendChild(charNode);
+        });
+        const glyphWidthMapping = Array.from(container.children).map(node => { 
+          const glyph = node.innerText;
+          const width = node.getBoundingClientRect().width;
+          return { glyph, width };
+        });
+        const maxWidthGlyph = glyphWidthMapping.reduce((max, mapping) => {
+          return mapping.width > max.width ? mapping : max;
+        }, { glyph: 'initial glyph', width: 0 });
+        console.log(`Max width glyph: { glyph: ${maxWidthGlyph.glyph}, width: ${maxWidthGlyph.width} }`);
+        console.log(JSON.stringify(glyphWidthMapping, null, 2));
+      };
+
+      const calculateButton = document.getElementById('calculate');
+      const fontSizeValueInput = document.getElementById('fontSizeValue');
+      const fontSizeUnitInput = document.getElementById('fontSizeUnit');
+      const fromInput = document.getElementById('from');
+      const toInput = document.getElementById('to');
+
+      calculateButton.addEventListener('click', () => {
+        const fontSizeValue = fontSizeValueInput.value;
+        const fontSizeUnit = fontSizeUnitInput.options[fontSizeUnitInput.selectedIndex].value;
+        document.body.setAttribute('style', `font-size: ${fontSizeValue}${fontSizeUnit}`);
+
+        calculate(parseInt(fromInput.value), parseInt(toInput.value));
+      });
+    })();
+  </script>
+</body>
+</html>
