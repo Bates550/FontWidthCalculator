@@ -16,6 +16,10 @@
       font-family: sans-serif;
     }
 
+    #container {
+      white-space: pre;
+    }
+
     span {
       margin: 0;
       padding: 0;
@@ -26,11 +30,13 @@
 
 <body>
   <div>
-    I want the widths of all glyphs in the font from this
+    I want the widths of all glyphs in the font from this 
     <label>
-      url
+    url
       <input id="fontUrl" type="url" placeholder="e.g. file:// or https://">
     </label>
+    ,
+    <br/>
     <label>
       with a font size of
       <input id="fontSizeValue" type="number" value="14">
@@ -47,6 +53,8 @@
       <option value="vh">vh</option>
       <option value="vw">vw</option>
     </select>
+    ,
+    <br/>
     with char codes
     <label>
       from
@@ -57,6 +65,7 @@
       <input id="to" type="number" placeholder="exclusive">
     </label>
     .
+    <br/>
     <button id="calculate">Be a dear and get those for me.</button>
     <span id="container">
     </span>
