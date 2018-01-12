@@ -102,8 +102,9 @@
         });
         const glyphWidthMapping = Array.from(container.children).map(node => { 
           const glyph = node.innerText;
+          const charCode = glyph.charCodeAt(0);
           const width = node.getBoundingClientRect().width;
-          return { glyph, width };
+          return { glyph, charCode, width };
         });
         const maxWidthGlyph = glyphWidthMapping.reduce((max, mapping) => {
           return mapping.width > max.width ? mapping : max;
