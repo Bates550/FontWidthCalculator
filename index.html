@@ -25,41 +25,42 @@
 </head>
 
 <body>
-  I want the widths of all glyphs in the font from this
-  <label>
-    url
-    <input id="fontUrl" type="url" placeholder="e.g. file:// or https://">
-  </label>
-
-  <label>
-    with a font size of
-    <input id="fontSizeValue" type="number" value="14">
-  </label>
-  <select id="fontSizeUnit">
-    <option value="ch">ch</option>
-    <option value="cm">cm</option>
-    <option value="ex">ex</option>
-    <option value="in">in</option>
-    <option value="mm">mm</option>
-    <option value="pc">pc</option>
-    <option value="pt">pt</option>
-    <option value="px" selected>px</option>
-    <option value="vh">vh</option>
-    <option value="vw">vw</option>
-  </select>
-  with char codes  
-  <label>
-    from
-    <input id="from" type="number" placeholder="inclusive">
-  </label>
-  <label>
-    to
-    <input id="to" type="number" placeholder="exclusive">
-  </label>
-  .
-  <button id="calculate">Be a dear and get those for me.</button>
-  <span id="container">
-  </span>
+  <div>
+    I want the widths of all glyphs in the font from this
+    <label>
+      url
+      <input id="fontUrl" type="url" placeholder="e.g. file:// or https://">
+    </label>
+    <label>
+      with a font size of
+      <input id="fontSizeValue" type="number" value="14">
+    </label>
+    <select id="fontSizeUnit">
+      <option value="ch">ch</option>
+      <option value="cm">cm</option>
+      <option value="ex">ex</option>
+      <option value="in">in</option>
+      <option value="mm">mm</option>
+      <option value="pc">pc</option>
+      <option value="pt">pt</option>
+      <option value="px" selected>px</option>
+      <option value="vh">vh</option>
+      <option value="vw">vw</option>
+    </select>
+    with char codes
+    <label>
+      from
+      <input id="from" type="number" placeholder="inclusive">
+    </label>
+    <label>
+      to
+      <input id="to" type="number" placeholder="exclusive">
+    </label>
+    .
+    <button id="calculate">Be a dear and get those for me.</button>
+    <span id="container">
+    </span>
+  </div>
   <script>
     (function iife() {
       const range = (start, end) => {
